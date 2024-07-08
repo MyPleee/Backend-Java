@@ -1,6 +1,6 @@
 package heesom.test.dbpool;
 
-import heesom.util.StopWatch;
+import ple.util.StopWatch;
 
 public class ConnectionTestMain {
 

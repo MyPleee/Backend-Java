@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import heesom.test.dbpool.DbManager;
+import heesom.test.dbpool.DbManagerWithNoPool;
 
 public class TestDaoWithDb {
 	String tableName = "test.users";
@@ -15,7 +15,7 @@ public class TestDaoWithDb {
 	
 	public void insertData(int id, String name, String email){
 
-		DbManager dm = new DbManager();
+		DbManagerWithNoPool dm = new DbManagerWithNoPool();
 		
         try {
         	Connection conn = dm.getConnection();
@@ -39,7 +39,7 @@ public class TestDaoWithDb {
 	
 	public void selectData(int id){
 
-		DbManager dm = new DbManager();
+		DbManagerWithNoPool dm = new DbManagerWithNoPool();
 		
         try {
         	Connection conn = dm.getConnection();

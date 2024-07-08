@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import heesom.test.dbpool.DbManager;
+import heesom.test.dbpool.DbManagerWithNoPool;
 
 public class TestDao {
 	String tableName = "test.users";
@@ -16,7 +16,7 @@ public class TestDao {
 	
 	public void insertData(int id, String name, String email){
 
-		DbManager dm = new DbManager();
+		DbManagerWithNoPool dm = new DbManagerWithNoPool();
 		
 		Connection conn = null;
         PreparedStatement ps = null;
@@ -58,7 +58,7 @@ public class TestDao {
 	
 	public void selectData(int id){
 
-		DbManager dm = new DbManager();
+		DbManagerWithNoPool dm = new DbManagerWithNoPool();
 		
 		Connection conn = null;
         PreparedStatement ps = null;

@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import heesom.prop.DbPoolConfig;
+import ple.prop.DbPoolConfig;
 
-public class DbManager {
+public class DbManagerWithNoPool {
 	
 	Connection connection;
 	
-	public DbManager() {
+	public DbManagerWithNoPool() {
 		DbPoolConfig dbPoolConfig = DbPoolConfig.getInstance();
 		
 		try {

@@ -1,4 +1,4 @@
-package heesom.prop;
+package ple.prop;
 
 import java.io.IOException;
 import java.io.InputStream;
