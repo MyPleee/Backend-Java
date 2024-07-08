@@ -1,4 +1,4 @@
-package heesom.scheduler;
+package heesom.test.scheduler;
 
 public class MusicBoxWorker extends AbstractWorker{
 	private String name = "MusicBoxWorker";

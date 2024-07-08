@@ -11,8 +11,11 @@ public class DbPoolConfig {
 	
 	private String dbDriver;
 	private String dbUrl;
-	private String user;
-	private String password;
+	private String dbUser;
+	private String dbPassword;
+	
+	private int initPoolSize;
+	private int maxPoolSize;
 	
 	private DbPoolConfig() {
 		this.loadProperties();
@@ -34,8 +37,11 @@ public class DbPoolConfig {
             
             this.dbDriver = dbPropFile.getProperty("db.driver");
             this.dbUrl = dbPropFile.getProperty("db.url");
-            this.user = dbPropFile.getProperty("db.user");
-            this.password = dbPropFile.getProperty("db.password");
+            this.dbUser = dbPropFile.getProperty("db.user");
+            this.dbPassword = dbPropFile.getProperty("db.password");
+            
+            this.initPoolSize = Integer.parseInt(dbPropFile.getProperty("db.pool.initpoolsize"));
+            this.maxPoolSize = Integer.parseInt(dbPropFile.getProperty("db.pool.maxpoolsize"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,11 +54,19 @@ public class DbPoolConfig {
     	return this.dbUrl;
     }
     
-    public String getUser() {
-    	return this.user;
+    public String getDbUser() {
+    	return this.dbUser;
     }
 	   
-    public String getPassword() {
-    	return this.password;
+    public String getDbPassword() {
+    	return this.dbPassword;
+    }
+    
+    public int getInitPoolSize() {
+    	return this.initPoolSize;
+    }
+    
+    public int getMaxPoolSize() {
+    	return this.maxPoolSize;
     }
 }

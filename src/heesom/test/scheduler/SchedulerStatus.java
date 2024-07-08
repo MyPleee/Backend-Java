@@ -1,4 +1,4 @@
-package heesom.scheduler;
+package heesom.test.scheduler;
 
 public enum SchedulerStatus {
 	SHUTDOWNED(0, "SHUTDOWNED"),

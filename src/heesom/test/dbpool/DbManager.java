@@ -1,4 +1,4 @@
-package heesom.dbpool;
+package heesom.test.dbpool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,8 +15,8 @@ public class DbManager {
 		DbPoolConfig dbPoolConfig = DbPoolConfig.getInstance();
 		
 		try {
-			Class.forName("org.h2.Driver");
-			this.connection = DriverManager.getConnection(dbPoolConfig.getDbUrl(), dbPoolConfig.getUser(), dbPoolConfig.getPassword());
+			Class.forName(dbPoolConfig.getDbDriver());
+			this.connection = DriverManager.getConnection(dbPoolConfig.getDbUrl(), dbPoolConfig.getDbUser(), dbPoolConfig.getDbPassword());
 			this.connection.setAutoCommit(false);
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -43,6 +43,15 @@ public class DbManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void release() {
+    	try {
+			this.connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			e.printStackTrace();
+		}
     }
 
     
