@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
 	
-	<display-name>MSH Web Application</display-name>
-	<description>Application for BizFrame MSH 3.0</description>
+	<display-name>Playlist To Music Backend Application</display-name>
 	
 	<servlet>
 		<servlet-name>insert</servlet-name>
@@ -25,11 +24,11 @@
     </servlet-mapping>
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/err00zz500.jsp</location>
+        <location></location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/err00zz404.jsp</location>
+        <location></location>
     </error-page>
     
      -->
