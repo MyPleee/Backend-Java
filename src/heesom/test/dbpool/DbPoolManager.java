@@ -5,19 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import ple.prop.DbPoolConfig;
+import ple.prop.DbPoolProperties;
 
 public class DbPoolManager {
 	
 	private static DbPoolManager instance = new DbPoolManager();
 	private LinkedList<Connection> connectionPool = new LinkedList<>();
-	private DbPoolConfig dbPoolConfig;
+	private DbPoolProperties dbPoolConfig;
 	
 	/**
 	 * db.properties load
 	 */
 	private DbPoolManager() {
-		dbPoolConfig = DbPoolConfig.getInstance();
+		dbPoolConfig = DbPoolProperties.getInstance();
 
 	}
 	

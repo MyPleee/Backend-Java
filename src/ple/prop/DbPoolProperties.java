@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class DbPoolConfig {
+public class DbPoolProperties {
 	
 	private static final String PROPERTIES_FILE = "dbpool.properties";
-	private static DbPoolConfig instance = new DbPoolConfig();
+	private static DbPoolProperties instance = new DbPoolProperties();
 	
 	private String dbDriver;
 	private String dbUrl;
@@ -17,20 +17,20 @@ public class DbPoolConfig {
 	private int initPoolSize;
 	private int maxPoolSize;
 	
-	private DbPoolConfig() {
+	private DbPoolProperties() {
 		this.loadProperties();
 	}
     
-	public static DbPoolConfig getInstance() {
-		if (DbPoolConfig.instance == null) {
-			DbPoolConfig.instance = new DbPoolConfig();
+	public static DbPoolProperties getInstance() {
+		if (DbPoolProperties.instance == null) {
+			DbPoolProperties.instance = new DbPoolProperties();
 		}
-		return DbPoolConfig.instance;
+		return DbPoolProperties.instance;
 	}
 	
     private void loadProperties() {
     	Properties dbPropFile = new Properties();
-        try (InputStream inputStream = DbPoolConfig.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
+        try (InputStream inputStream = DbPoolProperties.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
             if (inputStream != null) {
                 dbPropFile.load(inputStream);
             }

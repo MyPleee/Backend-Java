@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import ple.prop.DbPoolConfig;
+import ple.prop.DbPoolProperties;
 
 public class DbManagerWithNoPool {
 	
 	Connection connection;
 	
 	public DbManagerWithNoPool() {
-		DbPoolConfig dbPoolConfig = DbPoolConfig.getInstance();
+		DbPoolProperties dbPoolConfig = DbPoolProperties.getInstance();
 		
 		try {
 			Class.forName(dbPoolConfig.getDbDriver());
