@@ -3,8 +3,6 @@ package ple.dbpool;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import ple.exception.InitialException;
-
 public class DbManager{
 	private Connection connection;
 	

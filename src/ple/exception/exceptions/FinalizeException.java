@@ -1,8 +1,7 @@
-package ple.exception;
+package ple.exception.exceptions;
 
-import ple.type.ErrorType;
-import ple.type.FinalizeErrorType;
-import ple.type.InitialErrorType;
+import ple.exception.type.FinalizeErrorType;
+import ple.exception.type.InitialErrorType;
 
 public class FinalizeException extends PleException{
 

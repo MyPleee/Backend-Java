@@ -1,6 +1,6 @@
-package ple.type;
+package ple.exception.type;
 
-public enum FinalizeErrorType implements ErrorType{
+public enum FinalizeErrorType implements PleErrorType{
 	ConnectionCloseError("ConnectionCloseError", 2000, "서버 종료 시 dbpool에 있는 커넥션 해제 중 예외 발생"),;
 	
 	

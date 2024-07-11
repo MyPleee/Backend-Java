@@ -1,6 +1,6 @@
-package ple.type;
+package ple.exception.type;
 
-public enum InitialErrorType implements ErrorType{
+public enum InitialErrorType implements PleErrorType{
 	ClassNotFoundError("ClassNotFoundError", 1000, "dbpool 생성 중 드라이버 가져올 수 없음 에러"),
 	SqlError("SqlError", 1001, "dbpool 초기화를 위해 커넥션 생성 중 sql 에러")
 	;

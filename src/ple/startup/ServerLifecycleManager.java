@@ -1,9 +1,8 @@
 package ple.startup;
 
-import ple.dbpool.DbManager;
 import ple.dbpool.DbPoolManager;
-import ple.exception.FinalizeException;
-import ple.exception.InitialException;
+import ple.exception.exceptions.FinalizeException;
+import ple.exception.exceptions.InitialException;
 
 public class ServerLifecycleManager {
 
@@ -22,8 +21,8 @@ public class ServerLifecycleManager {
 			dbPoolManager.initializePool();	
 		} catch (InitialException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 		
 		System.out.println("<===[ServerLifecycleManager, initialize]");
@@ -38,8 +37,8 @@ public class ServerLifecycleManager {
 			dbPoolManager.closePool();	
 		} catch (FinalizeException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 		
 		System.out.println("<===[ServerLifecycleManager, finalize]");

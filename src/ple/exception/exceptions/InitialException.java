@@ -1,7 +1,6 @@
-package ple.exception;
+package ple.exception.exceptions;
 
-import ple.type.ErrorType;
-import ple.type.InitialErrorType;
+import ple.exception.type.InitialErrorType;
 
 public class InitialException extends PleException{
 

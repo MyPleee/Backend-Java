@@ -1,6 +1,6 @@
-package ple.type;
+package ple.exception.type;
 
-public interface ErrorType {
+public interface PleErrorType {
     String getErrorName();
     int getErrorCode();
     String getErrorMessage();
