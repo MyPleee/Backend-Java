@@ -3,6 +3,12 @@
 	
 	<display-name>Playlist To Music Backend Application</display-name>
 	
+    <listener>
+        <listener-class>
+			ple.startup.ContextListener
+		</listener-class>
+    </listener>
+    
 	<servlet>
 		<servlet-name>insert</servlet-name>
 		<servlet-class>
