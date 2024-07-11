@@ -8,7 +8,7 @@
 <!-- ======================================================================= -->
 <!-- TO SET : Set project name as you intended								 -->
 <!-- ======================================================================= -->
-<project name="test-heesom" default="copy.echo" basedir=".">
+<project name="test-heesom" default="copy" basedir=".">
     <!-- Product name and version properties -->
     <property name="product.name" value="test_server"/>
     <property name="product.version.major" value="0"/>
@@ -115,19 +115,16 @@
 			encoding="utf-8" 
 			classpath="${build.classpath}">
 		</javac>
-	</target>
-	
-	<!-- 즉, build.classpath는 classpath ID로 정의된 모든 경로를 포함하는 속성 -->
-	<target name="compile.echo" depends="compile">
-        <echo message="classpath=${build.classpath}"/>
+		
+		<echo message="classpath=${build.classpath}"/>
         <echo message="src.dir=${src.dir}"/>
 	</target>
-
+	
 	
     <!-- =================================================================== -->
     <!-- create jar file and copy jar package                                -->
    	<!-- =================================================================== -->
-    <target name="deploy" depends="compile.echo">
+    <target name="deploy" depends="compile">
 
         <jar destfile="${build.deploy.dir}\${jar.name}">
         	<!--타겟 지정하고-->
@@ -152,19 +149,18 @@
     	            todir="${final.deploy.dir}"
     				overwrite="true" />
    
-    </target>
-
-	<target name="deploy.echo" depends="deploy">
         <echo message="BUILD-DIR ... ${build.deploy.dir}"/>
         <echo message="COPY TO SERVER DEPLOY ... ${server.deploy.dir}"/>
-	</target>	
+    	
+    </target>
+
 	
 	<!-- =================================================================== -->
     <!-- Copy web.xml and properties file                                    -->
     <!-- =================================================================== -->
     
    
-    <target name="copy" depends="deploy.echo">
+    <target name="copy" depends="deploy">
 
     	<copy file="${base.webinf.dir}\web.xml"
     	            todir="${server.webinf.dir}"
@@ -178,9 +174,7 @@
     	            todir="${server.classes.dir}"
     				overwrite="true" />
    
-    </target>
-	
-	<target name="copy.echo" depends="copy">
+    	
 		<echo message="==============================================================="/>
 		<echo message="============ COPY web.xml ====================================="/>
 		<echo message="==============================================================="/>
@@ -193,7 +187,8 @@
         <echo message="COPY TO SERVER ... ${server.classes.dir}\dbpool.properties     "/>
         <echo message="HOME ... ${base.conf.dir}\system.properties                    "/>
         <echo message="COPY TO SERVER ... ${server.classes.dir}\system.properties     "/>
-	</target>	
+    </target>
+	
 
 	
 	<!-- =================================================================== -->
