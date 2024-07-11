@@ -12,6 +12,7 @@ public class ExceptionDTO {
     private String name;
     private int code;
     private String message;
+    private int status;
 
     public ExceptionDTO(PleException e) {
     	PleErrorType pleErrorType = e.getErrorType();
@@ -20,10 +21,15 @@ public class ExceptionDTO {
         this.name = pleErrorType.getErrorName();
         this.code = pleErrorType.getErrorCode();
         this.message = pleErrorType.getErrorMessage();
+        this.status = pleErrorType.getErrorStatus();
     }
 
     public String getFormattedTimestamp(LocalDateTime now) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss,SSS");
         return now.format(formatter);
+    }
+    
+    public int getStatus() {
+    	return this.status;
     }
 }
