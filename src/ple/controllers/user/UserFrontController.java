@@ -1,0 +1,57 @@
+package ple.controllers.user;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import ple.controllers.common.CommonController;
+import ple.exception.exceptions.PleException;
+import ple.exception.handle.ExceptionHandler;
+
+@WebServlet(name="UserFrontController", urlPatterns="/user/*")
+public class UserFrontController extends HttpServlet{
+	
+	private Map<String, CommonController> controllerMap = new HashMap<>();
+	
+	public UserFrontController() {
+		controllerMap.put("/user/admin", (CommonController) new AdminController());
+	}
+	
+	@Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String requestURI = req.getRequestURI();
+        
+        CommonController controller = controllerMap.get(requestURI);
+        
+        if (controller == null) {
+        	
+        }
+        
+        controller.doGet(req, resp);
+        
+
+        
+    }
+	
+	
+	@Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String requestURI = req.getRequestURI();
+        
+        CommonController controller = controllerMap.get(requestURI);
+        
+        if (controller == null) {
+        	
+        }
+        
+        controller.doPost(req, resp);
+        
+    }
+	
+}
