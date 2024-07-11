@@ -38,7 +38,7 @@ public class DbPoolManager {
 					this.connectionPool.add(this.createNewConnectionForPool());
 				}
 			}
-			System.out.println("complete making dbpool");
+			System.out.println("Making dbpool... Success");
 		} catch (ClassNotFoundException e) {
 			throw new InitialException(e, InitialErrorType.ClassNotFoundError);
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class DbPoolManager {
                         connection.close();
                     }
             	}
-            	System.out.println("complete closing dbpool");
+            	System.out.println("Closing dbpool... Success");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
