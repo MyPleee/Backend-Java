@@ -15,6 +15,7 @@ public class TestInsertServlet extends HttpServlet {
 	
 	StopWatch st = StopWatch.getInstance();
 	
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		
@@ -28,6 +29,7 @@ public class TestInsertServlet extends HttpServlet {
 		this.st.resetStopWatch();
 	}
 	
+	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		TestDao dao = new TestDao();
