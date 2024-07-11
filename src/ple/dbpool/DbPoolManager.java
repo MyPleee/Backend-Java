@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import ple.exception.InitialException;
 import ple.prop.DbPoolProperties;
+import ple.type.InitialErrorType;
 
 public class DbPoolManager {
 	
@@ -29,19 +31,18 @@ public class DbPoolManager {
 	
 	/**
 	 * pool에 db.properties에 설정된 만큼의 커넥션 생성
+	 * @throws InitialException 
 	 */
-	protected void initializePool() {
+	public void initializePool() throws InitialException {
 		try {
 			for (int i = 0; i < dbPoolConfig.getInitPoolSize(); i++) {
 				connectionPool.add(this.createNewConnectionForPool());
 			}
 			System.out.println("dbpool 초기화 완료");
 		} catch (ClassNotFoundException e) {
-			System.out.println("dbpool 생성 중 드라이버 가져올 수 없음 에러");
-			e.printStackTrace();
+			throw new InitialException(e, InitialErrorType.ClassNotFoundError);
 		} catch (SQLException e) {
-			System.out.println("dbpool 생성 중 sql 에러");
-			e.printStackTrace();
+			throw new InitialException(e, InitialErrorType.SqlError);
 		}
 	}
 	
