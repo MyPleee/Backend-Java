@@ -27,6 +27,8 @@ public class DbPoolManager {
 		return DbPoolManager.instance;
 	}
 	
+	
+	// ===================== 서버와 관련된 메서드 =====================
 	/**
 	 * pool에 db.properties에 설정된 만큼의 커넥션 생성
 	 * @throws InitialException 
@@ -46,6 +48,10 @@ public class DbPoolManager {
 		}
 	}
 	
+	/**
+	 * 서버 종료시 connection pool에 있는 connection 해제
+	 * @throws FinalizeException
+	 */
 	public void closePool() throws FinalizeException{
         synchronized (this.connectionPool) {   
             try {
@@ -62,6 +68,9 @@ public class DbPoolManager {
         
         }
     }
+	
+
+	// ===================== DbManager와 관련된 메서드 =====================
 	
 	/**
 	 * 커넥션 1개 생성 후 반환
