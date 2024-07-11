@@ -23,9 +23,6 @@ public class DbPoolManager {
 	}
 	
 	public static DbPoolManager getInstance() {
-		if (instance == null) {
-			DbPoolManager.instance = new DbPoolManager();
-		}
 		return DbPoolManager.instance;
 	}
 	
@@ -35,8 +32,10 @@ public class DbPoolManager {
 	 */
 	public void initializePool() throws InitialException {
 		try {
-			for (int i = 0; i < dbPoolConfig.getInitPoolSize(); i++) {
-				connectionPool.add(this.createNewConnectionForPool());
+			synchronized(this.connectionPool) {
+				for (int i = 0; i < dbPoolConfig.getInitPoolSize(); i++) {
+					this.connectionPool.add(this.createNewConnectionForPool());
+				}
 			}
 			System.out.println("dbpool 초기화 완료");
 		} catch (ClassNotFoundException e) {
@@ -62,14 +61,15 @@ public class DbPoolManager {
 	 * @return Connection
 	 * @throws SQLException
 	 */
-	protected synchronized Connection getConnection() throws SQLException {
-		
-		while (connectionPool.isEmpty()) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				throw new SQLException("Interrupted while waiting for a connection", e);
+	protected Connection getConnection() throws SQLException {
+		synchronized(this.connectionPool) {
+			while (this.connectionPool.isEmpty()) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					throw new SQLException("Interrupted while waiting for a connection", e);
+				}
 			}
 		}
 		
@@ -80,20 +80,22 @@ public class DbPoolManager {
 	 * 커넥션 반환하면 dbpool에 추가 후 대기하고 있는 스레드 있다면 깨우기
 	 * @param connection
 	 */
-	protected synchronized void releaseConnection(Connection connection) {
-		if (connection != null) {
-			// 현재 커넥션 풀 크기가 설정한 풀 크기 보다 작으면 커넥션 풀에 다시 추가
-			if (connectionPool.size() < this.dbPoolConfig.getMaxPoolSize()) {
-				connectionPool.addLast(connection);
-			} else {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+	protected void releaseConnection(Connection connection) {
+		synchronized(this.connectionPool) {
+			if (connection != null) {
+				// 현재 커넥션 풀 크기가 설정한 풀 크기 보다 작으면 커넥션 풀에 다시 추가
+				if (connectionPool.size() < this.dbPoolConfig.getMaxPoolSize()) {
+					connectionPool.addLast(connection);
+				} else {
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
+				
+				notifyAll();
 			}
-			
-			notifyAll();
 		}
 	}
 
