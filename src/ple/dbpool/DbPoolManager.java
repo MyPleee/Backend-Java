@@ -18,7 +18,6 @@ public class DbPoolManager {
 	 */
 	private DbPoolManager() {
 		dbPoolConfig = DbPoolProperties.getInstance();
-
 	}
 	
 	public static DbPoolManager getInstance() {
@@ -31,7 +30,7 @@ public class DbPoolManager {
 	/**
 	 * pool에 db.properties에 설정된 만큼의 커넥션 생성
 	 */
-	public void initializePool() {
+	protected void initializePool() {
 		try {
 			for (int i = 0; i < dbPoolConfig.getInitPoolSize(); i++) {
 				connectionPool.add(this.createNewConnectionForPool());
@@ -62,7 +61,7 @@ public class DbPoolManager {
 	 * @return Connection
 	 * @throws SQLException
 	 */
-	public synchronized Connection getConnection() throws SQLException {
+	protected synchronized Connection getConnection() throws SQLException {
 		
 		while (connectionPool.isEmpty()) {
 			try {
@@ -80,7 +79,7 @@ public class DbPoolManager {
 	 * 커넥션 반환하면 dbpool에 추가 후 대기하고 있는 스레드 있다면 깨우기
 	 * @param connection
 	 */
-	public synchronized void releaseConnection(Connection connection) {
+	protected synchronized void releaseConnection(Connection connection) {
 		if (connection != null) {
 			// 현재 커넥션 풀 크기가 설정한 풀 크기 보다 작으면 커넥션 풀에 다시 추가
 			if (connectionPool.size() < this.dbPoolConfig.getMaxPoolSize()) {
