@@ -17,15 +17,26 @@ public class ContextListener implements ServletContextListener{
 							+ PleConstants.PRDOCUT_MAJOR_VERSION + "-" + PleConstants.PRDOCUT_MINOR_VERSION);
 		System.out.println("************************************************");
 		System.out.println("");
-		
-		ServerInitializer serverInitializer = new ServerInitializer();
-		serverInitializer.init();
+		ServerLifecycleManager serverLifecycleManager = new ServerLifecycleManager();
+		serverLifecycleManager.initialize();
 		
 	}
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent var1) {
-
+		
+		ServerLifecycleManager serverLifecycleManager = new ServerLifecycleManager();
+		serverLifecycleManager.finalize();
+		
+		System.out.println("");
+		System.out.println("************************************************");
+		System.out.println("          Shutting Down Server........");
+		System.out.println("          " 
+							+ PleConstants.PRODUCT_NAME + "-"
+							+ PleConstants.PRDOCUT_MAJOR_VERSION + "-" + PleConstants.PRDOCUT_MINOR_VERSION);
+		System.out.println("************************************************");
+		System.out.println("");
+		
 	}
 
 	/*

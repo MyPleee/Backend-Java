@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import ple.exception.FinalizeException;
 import ple.exception.InitialException;
 import ple.prop.DbPoolProperties;
 import ple.type.InitialErrorType;
@@ -37,13 +38,30 @@ public class DbPoolManager {
 					this.connectionPool.add(this.createNewConnectionForPool());
 				}
 			}
-			System.out.println("dbpool 초기화 완료");
+			System.out.println("complete making dbpool");
 		} catch (ClassNotFoundException e) {
 			throw new InitialException(e, InitialErrorType.ClassNotFoundError);
 		} catch (SQLException e) {
 			throw new InitialException(e, InitialErrorType.SqlError);
 		}
 	}
+	
+	public void closePool() throws FinalizeException{
+        synchronized (this.connectionPool) {   
+            try {
+            	while (!this.connectionPool.isEmpty()) {
+                    Connection connection = connectionPool.removeFirst();
+                    if (connection != null && !connection.isClosed()) {
+                        connection.close();
+                    }
+            	}
+            	System.out.println("complete closing dbpool");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        
+        }
+    }
 	
 	/**
 	 * 커넥션 1개 생성 후 반환
