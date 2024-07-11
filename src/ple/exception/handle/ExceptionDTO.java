@@ -9,7 +9,8 @@ import ple.exception.type.PleErrorType;
 public class ExceptionDTO {
 	
 	private String timestamp;
-    private String name;
+	private String className;
+    private String errorName;
     private int code;
     private String message;
     private int status;
@@ -18,7 +19,8 @@ public class ExceptionDTO {
     	PleErrorType pleErrorType = e.getErrorType();
     	
         this.timestamp = this.getFormattedTimestamp(LocalDateTime.now());
-        this.name = pleErrorType.getErrorName();
+        this.className = e.getClass().getSimpleName();
+        this.errorName = pleErrorType.getErrorName();
         this.code = pleErrorType.getErrorCode();
         this.message = pleErrorType.getErrorMessage();
         this.status = pleErrorType.getErrorStatus();
