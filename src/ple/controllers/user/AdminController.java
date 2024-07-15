@@ -10,34 +10,14 @@ import ple.exception.handle.ExceptionHandler;
 public class AdminController implements CommonController{
 
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-        	
-        } catch (PleException e) {
-        	e.printStackTrace();
-        	
-        	ExceptionHandler handler = new ExceptionHandler();
-        	handler.sendToClient(e, resp);
-        }
-        catch (Throwable t) {
-        	t.printStackTrace();
-        }
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws PleException{
+
 		
 	}
 
 	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-        	
-        } catch (PleException e) {
-        	e.printStackTrace();
-        	
-        	ExceptionHandler handler = new ExceptionHandler();
-        	handler.sendToClient(e, resp);
-        }
-        catch (Throwable t) {
-        	t.printStackTrace();
-        }
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws PleException{
+
 		
 	}
 

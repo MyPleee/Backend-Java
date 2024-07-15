@@ -33,7 +33,18 @@ public class UserFrontController extends HttpServlet{
         	
         }
         
-        controller.doGet(req, resp);
+        try {
+        	controller.doGet(req, resp);
+        } catch (PleException e) {
+        	e.printStackTrace();
+        	
+        	ExceptionHandler exceptionHandler = new ExceptionHandler();
+        	exceptionHandler.sendToClient(e, resp);
+        }
+        catch (Throwable t) {
+        	t.printStackTrace();
+        }
+        
         
 
         
@@ -50,7 +61,18 @@ public class UserFrontController extends HttpServlet{
         	
         }
         
-        controller.doPost(req, resp);
+        try {
+        	controller.doPost(req, resp);
+        } catch (PleException e) {
+        	e.printStackTrace();
+        	
+        	ExceptionHandler exceptionHandler = new ExceptionHandler();
+        	exceptionHandler.sendToClient(e, resp);
+        }
+        catch (Throwable t) {
+        	t.printStackTrace();
+        }
+        
         
     }
 	
