@@ -25,7 +25,9 @@
     <property name="year" value="2024"/>
     <property name="copyright"
               value="Copyright ${year}"/>
-
+    	
+	<property name="jar.name"
+	              value="${product.name}-${product_version}.jar"/>
     
 	<!-- =================================================================== -->
 	<!-- Build Classpath													 -->
