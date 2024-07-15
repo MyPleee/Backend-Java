@@ -1,6 +1,6 @@
-package ple.exception.exceptions;
+package ple.exceptions.customexceptions;
 
-import ple.exception.type.PleErrorType;
+import ple.exceptions.exceptiontypes.PleErrorType;
 
 public class PleException extends Exception{
 

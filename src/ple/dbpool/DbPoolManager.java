@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import ple.exception.exceptions.FinalizeException;
-import ple.exception.exceptions.InitialException;
-import ple.exception.type.InitialErrorType;
-import ple.prop.DbPoolProperties;
+import ple.config.DbPoolProperties;
+import ple.exceptions.customexceptions.FinalizeException;
+import ple.exceptions.customexceptions.InitialException;
+import ple.exceptions.exceptiontypes.InitialErrorType;
 
 public class DbPoolManager {
 	

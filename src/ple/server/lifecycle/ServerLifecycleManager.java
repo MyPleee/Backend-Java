@@ -1,8 +1,8 @@
-package ple.startup;
+package ple.server.lifecycle;
 
 import ple.dbpool.DbPoolManager;
-import ple.exception.exceptions.FinalizeException;
-import ple.exception.exceptions.InitialException;
+import ple.exceptions.customexceptions.FinalizeException;
+import ple.exceptions.customexceptions.InitialException;
 
 public class ServerLifecycleManager {
 

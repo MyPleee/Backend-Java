@@ -1,18 +1,12 @@
-package ple.exception.type;
+package ple.exceptions.exceptiontypes;
 
 import javax.servlet.http.HttpServletResponse;
 
-public enum InitialErrorType implements PleErrorType{
-	ClassNotFoundError(
-			"ClassNotFoundError", 
-			1000, 
-			"dbpool 생성 중 드라이버 가져올 수 없음 에러", 
-			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
-			),
-	SqlError(
-			"SqlError", 
-			1001, 
-			"dbpool 초기화를 위해 커넥션 생성 중 sql 에러", 
+public enum FinalizeErrorType implements PleErrorType{
+	ConnectionCloseError(
+			"ConnectionCloseError", 
+			2000, 
+			"서버 종료 시 dbpool에 있는 커넥션 해제 중 예외 발생", 
 			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
 			);
 	
@@ -22,7 +16,7 @@ public enum InitialErrorType implements PleErrorType{
 	private String errorMessage;
 	private int errorStatus;
 	
-	private InitialErrorType(String errorName, int errorCode, String errorMessage, int errorStatus) {
+	private FinalizeErrorType(String errorName, int errorCode, String errorMessage, int errorStatus) {
 		this.errorName = errorName;
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;

@@ -1,9 +1,9 @@
-package ple.startup;
+package ple.server.lifecycle;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import ple.common.PleConstants;
+import ple.constants.PleConstants;
 
 public class ContextListener implements ServletContextListener{
 

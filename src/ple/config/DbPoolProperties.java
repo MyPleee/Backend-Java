@@ -1,4 +1,4 @@
-package ple.prop;
+package ple.config;
 
 import java.io.IOException;
 import java.io.InputStream;

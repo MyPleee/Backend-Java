@@ -1,4 +1,4 @@
-package ple.common;
+package ple.constants;
 
 public class PleConstants {
 	public static final String PRODUCT_NAME = "playlist to music";

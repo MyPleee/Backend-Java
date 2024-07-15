@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import ple.prop.DbPoolProperties;
+import ple.config.DbPoolProperties;
 
 public class DbPoolManager {
 	

@@ -1,4 +1,4 @@
-package ple.controllers.user;
+package ple.controllers.usercontrollers;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ple.controllers.common.CommonController;
-import ple.exception.exceptions.PleException;
-import ple.exception.handle.ExceptionHandler;
+import ple.controllers.interfaces.CommonController;
+import ple.exceptions.customexceptions.PleException;
+import ple.exceptions.exceptionhandling.ExceptionHandler;
 
 @WebServlet(name="UserFrontController", urlPatterns="/user/*")
 public class UserFrontController extends HttpServlet{

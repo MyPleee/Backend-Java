@@ -1,10 +1,10 @@
-package ple.exception.handle;
+package ple.exceptions.exceptionhandling;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import ple.exception.exceptions.PleException;
-import ple.exception.type.PleErrorType;
+import ple.exceptions.customexceptions.PleException;
+import ple.exceptions.exceptiontypes.PleErrorType;
 
 public class ExceptionDTO {
 	

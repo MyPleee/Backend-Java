@@ -1,4 +1,4 @@
-package ple.exception.type;
+package ple.exceptions.exceptiontypes;
 
 public interface PleErrorType {
     String getErrorName();

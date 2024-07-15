@@ -1,9 +1,9 @@
-package ple.controllers.common;
+package ple.controllers.interfaces;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ple.exception.exceptions.PleException;
+import ple.exceptions.customexceptions.PleException;
 
 public interface CommonController {
 	void doGet(HttpServletRequest req, HttpServletResponse resp) throws PleException;

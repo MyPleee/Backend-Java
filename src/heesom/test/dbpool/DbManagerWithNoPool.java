@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import ple.prop.DbPoolProperties;
+import ple.config.DbPoolProperties;
 
 public class DbManagerWithNoPool {
 	
