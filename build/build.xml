@@ -8,8 +8,13 @@
 <!-- ======================================================================= -->
 <!-- TO SET : Set project name as you intended								 -->
 <!-- ======================================================================= -->
-<project name="test-heesom" default="copy" basedir=".">
+<project name="test-heesom" default="copy" basedir="..">
+	
+	
     <!-- Product name and version properties -->
+	
+	<property file="${basedir}/build/mybuild.properties"/>
+	
     <property name="product.name" value="test_server"/>
     <property name="product.version.major" value="0"/>
     <property name="product.version.minor" value="0"/>
@@ -21,37 +26,6 @@
     <property name="copyright"
               value="Copyright ${year}"/>
 
-	<!-- =================================================================== -->
-	<!-- Properties Setting													 -->
-	<!-- =================================================================== -->
-	<property environment="env"/>
-
-	<property name="src.dir" value="${basedir}\src"/>
-	
-	<!-- ./build/classes, ./build/deploy -->
-	<property name="build.dir" value="${basedir}\build"/>
-	<property name="build.lib.dir" value="${basedir}\lib"/>
-	<property name="build.classes.dir" value="${build.dir}\classes"/>
-	
-	<property name="build.deploy.dir" value="${build.dir}\deploy"/>
-	<property name="final.deploy.dir" value="${basedir}\webapps\ROOT\WEB-INF\lib"/>
-	<property name="server.deploy.dir" value="D:\Tomcat\heesom_my_test\webapps\ROOT\WEB-INF\lib"/>
-
-	<property name="pkg.base.dir" value="ple"/>
-
-
-	<!-- web.xm, .properties -->
-	<property name="base.conf.dir" value="${basedir}\conf"/>
-	<property name="server.classes.dir" value="D:\Tomcat\heesom_my_test\webapps\ROOT\WEB-INF\classes"/>
-	<property name="base.webinf.dir" value="${basedir}\webapps\ROOT\WEB-INF"/>
-	<property name="server.webinf.dir" value="D:\Tomcat\heesom_my_test\webapps\ROOT\WEB-INF"/>
-
-	<!-- test_server-0_0.jar -->
-	<property name="jar.name" value="${product.name}-${product_version}.jar"/>
-
-    <!-- =================================================================== -->
-    <!-- TO SET : Set jar file directory to deploy here                      -->
-    <!-- =================================================================== -->
     
 	<!-- =================================================================== -->
 	<!-- Build Classpath													 -->
@@ -107,6 +81,10 @@
     <!-- =================================================================== -->
 	
 	<target name="compile" depends="prepare">
+		
+		<echo message="classpath=${build.classpath}"/>
+        <echo message="src.dir=${src.dir}"/>
+		
 		<javac srcdir="${src.dir}"
 			destdir="${build.classes.dir}"
 			debug="on"
@@ -116,8 +94,6 @@
 			classpath="${build.classpath}">
 		</javac>
 		
-		<echo message="classpath=${build.classpath}"/>
-        <echo message="src.dir=${src.dir}"/>
 	</target>
 	
 	
@@ -125,6 +101,9 @@
     <!-- create jar file and copy jar package                                -->
    	<!-- =================================================================== -->
     <target name="deploy" depends="compile">
+    	
+        <echo message="BUILD-DIR ... ${build.deploy.dir}"/>
+        <echo message="COPY TO SERVER DEPLOY ... ${server.deploy.dir}"/>
 
         <jar destfile="${build.deploy.dir}\${jar.name}">
         	<!--타겟 지정하고-->
@@ -148,9 +127,6 @@
 		<copy file="${build.deploy.dir}\${jar.name}"
     	            todir="${final.deploy.dir}"
     				overwrite="true" />
-   
-        <echo message="BUILD-DIR ... ${build.deploy.dir}"/>
-        <echo message="COPY TO SERVER DEPLOY ... ${server.deploy.dir}"/>
     	
     </target>
 
@@ -161,6 +137,19 @@
     
    
     <target name="copy" depends="deploy">
+    	
+    	<echo message="==============================================================="/>
+		<echo message="============ COPY web.xml ====================================="/>
+		<echo message="==============================================================="/>
+        <echo message="HOME ... ${base.webinf.dir}\web.xml                            "/>
+        <echo message="COPY TO SERVER ... ${server.webinf.dir}\web.xml                "/>
+		<echo message="==============================================================="/>
+		<echo message="============ COPY properties =================================="/>
+		<echo message="==============================================================="/>
+        <echo message="HOME ... ${base.conf.dir}\dbpool.properties                    "/>
+        <echo message="COPY TO SERVER ... ${server.classes.dir}\dbpool.properties     "/>
+        <echo message="HOME ... ${base.conf.dir}\system.properties                    "/>
+        <echo message="COPY TO SERVER ... ${server.classes.dir}\system.properties     "/>
 
     	<copy file="${base.webinf.dir}\web.xml"
     	            todir="${server.webinf.dir}"
@@ -174,19 +163,6 @@
     	            todir="${server.classes.dir}"
     				overwrite="true" />
    
-    	
-		<echo message="==============================================================="/>
-		<echo message="============ COPY web.xml ====================================="/>
-		<echo message="==============================================================="/>
-        <echo message="HOME ... ${base.webinf.dir}\web.xml                            "/>
-        <echo message="COPY TO SERVER ... ${server.webinf.dir}\web.xml                "/>
-		<echo message="==============================================================="/>
-		<echo message="============ COPY properties =================================="/>
-		<echo message="==============================================================="/>
-        <echo message="HOME ... ${base.conf.dir}\dbpool.properties                    "/>
-        <echo message="COPY TO SERVER ... ${server.classes.dir}\dbpool.properties     "/>
-        <echo message="HOME ... ${base.conf.dir}\system.properties                    "/>
-        <echo message="COPY TO SERVER ... ${server.classes.dir}\system.properties     "/>
     </target>
 	
 
