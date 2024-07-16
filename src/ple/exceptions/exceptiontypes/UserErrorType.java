@@ -8,8 +8,14 @@ public enum UserErrorType implements PleErrorType{
 			3000, 
 			"비밀번호 해싱 중 sha-256이 아닌 지원되지 않는 알고리즘 적용", 
 			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
-			);
-	
+			),
+	AdminLoginError(
+			"AdminLoginError", 
+			3001, 
+			"admin 로그인 중 에러", 
+			HttpServletResponse.SC_UNAUTHORIZED
+			),
+	;
 	
 	private String errorName;
 	private int errorCode;

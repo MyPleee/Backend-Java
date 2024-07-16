@@ -20,7 +20,10 @@ public class UserFrontController extends HttpServlet{
 	private Map<String, CommonController> controllerMap = new HashMap<>();
 	
 	public UserFrontController() {
-		controllerMap.put("/user/admin", (CommonController) new AdminController());
+		controllerMap.put("/user/checkuservalid", (CommonController) new CheckUserValidController());
+		controllerMap.put("/user/login", (CommonController) new LoginController());
+		controllerMap.put("/user/logout", (CommonController) new LogoutController());
+		controllerMap.put("/user/signup", (CommonController) new SignUpController());
 	}
 	
 	@Override
