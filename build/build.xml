@@ -15,7 +15,7 @@
 	
 	<property file="${basedir}/build/mybuild.properties"/>
 	
-    <property name="product.name" value="test_server"/>
+    <property name="product.name" value="test"/>
     <property name="product.version.major" value="0"/>
     <property name="product.version.minor" value="0"/>
     <property name="product.version"
@@ -27,7 +27,7 @@
               value="Copyright ${year}"/>
     	
 	<property name="jar.name"
-	              value="${product.name}-${product_version}.jar"/>
+	              value="${product.name}-${product.version}.jar"/>
     
 	<!-- =================================================================== -->
 	<!-- Build Classpath													 -->
