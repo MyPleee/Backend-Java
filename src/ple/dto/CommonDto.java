@@ -1,5 +1,5 @@
 package ple.dto;
 
-public interface CommonDto {
-	CommonDto getOriginalDto();
+public interface CommonDTO {
+	CommonDTO getOriginalDto();
 }

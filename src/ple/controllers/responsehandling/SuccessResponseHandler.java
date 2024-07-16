@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ple.dto.CommonDto;
+import ple.dto.CommonDTO;
 
 public class SuccessResponseHandler {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public HttpServletResponse sendToClient(CommonDto commonDto, HttpServletResponse resp) {
+    public HttpServletResponse sendToClient(CommonDTO commonDto, HttpServletResponse resp) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
