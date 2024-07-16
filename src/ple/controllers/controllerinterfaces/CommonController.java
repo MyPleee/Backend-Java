@@ -1,4 +1,4 @@
-package ple.controllers.interfaces;
+package ple.controllers.controllerinterfaces;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
