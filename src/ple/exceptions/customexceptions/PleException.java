@@ -24,6 +24,11 @@ public class PleException extends Exception{
 		this.errorType = errorType;
 	}
 	
+	public PleException(PleErrorType errorType) {
+		super(errorType.getErrorMessage());
+		this.errorType = errorType;
+	}
+	
 	public PleException(Throwable cause, PleErrorType errorType) {
 		super(errorType.getErrorMessage(), cause);
 		this.errorType = errorType;
