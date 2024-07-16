@@ -23,6 +23,7 @@ public class ExceptionHandler {
         	
         	resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
+            resp.setStatus(exceptionDTO.getStatus());
             
             resp.getWriter().write(json);
         } catch (JsonProcessingException e) {

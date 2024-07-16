@@ -23,6 +23,7 @@ public class SuccessResponseHandler {
         	
         	resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
+            resp.setStatus(HttpServletResponse.SC_OK);
             
             resp.getWriter().write(json);
         } catch (JsonProcessingException e) {
