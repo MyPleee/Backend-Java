@@ -50,6 +50,7 @@ public class DbPoolProperties {
     public String getDbDriver() {
     	return this.dbDriver;
     }
+    
     public String getDbUrl() {
     	return this.dbUrl;
     }
