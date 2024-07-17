@@ -1,6 +1,6 @@
 package ple.server.lifecycle;
 
-import ple.dbpool.DbPoolManager;
+import ple.db.DbPoolManager;
 import ple.exceptions.customexceptions.FinalizeException;
 import ple.exceptions.customexceptions.InitialException;
 
