@@ -1,4 +1,4 @@
-package ple.dbpool;
+package ple.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
