@@ -28,6 +28,9 @@ public class StopWatch {
 		this.isStopwatchRunning = true;
 	}
 	
+	/**
+	 * stopTime 저장
+	 */
 	public void stopStopWatch() {
 		this.stopTime = System.currentTimeMillis();
 		this.isStopwatchRunning = false;
@@ -36,6 +39,7 @@ public class StopWatch {
 	/**
 	 * startTime과 stopTime 초기화
 	 */
+	@Deprecated
 	public void resetStopWatch() {
 		this.startTime = -1L;
 		this.stopTime = -1L;
@@ -43,6 +47,10 @@ public class StopWatch {
 	}
 	
 	// ============= 출력 관련 메서드 ============== 
+	/**
+	 * startTime, elapsedTime, stopTime 출력
+	 * 시계가 돌고 있다면 현재 시간을 stopTime에 저장하고 출력
+	 */
 	public void print() {
 		System.out.println("==================================");
 		System.out.println("start time - " + this.getStartTime());
@@ -52,7 +60,7 @@ public class StopWatch {
 	}
 	
 	/**
-	 * 시계가 reset 전이라면 stopTime 저장하고 시작 기준으로 현재까지의 시간 반환
+	 * 시계가 돌고 있다면 stopTime 저장하고 시작 기준으로 현재까지의 시간 반환
 	 */
 	private long getElapsedTime() {
 		if (this.startTime == -1L) {
