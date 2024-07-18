@@ -5,7 +5,7 @@
 	
     <listener>
         <listener-class>
-			ple.startup.ContextListener
+			ple.server.lifecycle.ContextListener
 		</listener-class>
     </listener>
     
@@ -20,6 +20,9 @@
         <url-pattern>/insert</url-pattern>
     </servlet-mapping>
     
+    <session-config>
+        <session-timeout>3000</session-timeout>
+    </session-config>
     
 	<!-- ========================================= -->
 	
