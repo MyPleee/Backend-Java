@@ -1,12 +1,13 @@
-package heesom.test.dbpool;
+package heesom.test.dbpooltest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import heesom.test.dbpool.DbManagerWithNoPool;
+import heesom.test.dbpooltest.DbManagerWithPool;
 
-public class TestDaoWithDb {
+
+public class TestDaoWithDbPool {
 	String tableName = "test.users";
 	
 	String insertSql = "INSERT INTO " + tableName + " (id, name, email) VALUES (?, ?, ?)";
@@ -15,7 +16,7 @@ public class TestDaoWithDb {
 	
 	public void insertData(int id, String name, String email){
 
-		DbManagerWithNoPool dm = new DbManagerWithNoPool();
+		DbManagerWithPool dm = new DbManagerWithPool();
 		
         try {
         	Connection conn = dm.getConnection();
@@ -33,13 +34,15 @@ public class TestDaoWithDb {
         } catch (Exception e) {
         	dm.rollback();
         	e.printStackTrace();
+        } finally {
+        	dm.release();
         }
         
     }
 	
 	public void selectData(int id){
 
-		DbManagerWithNoPool dm = new DbManagerWithNoPool();
+		DbManagerWithPool dm = new DbManagerWithPool();
 		
         try {
         	Connection conn = dm.getConnection();
@@ -53,12 +56,14 @@ public class TestDaoWithDb {
         	
         } catch (Exception e) {
         	e.printStackTrace();
+        } finally {
+        	dm.release();
         }
         
     }
     
     public static void main(String args[]) {
-    	TestDaoWithDb db = new TestDaoWithDb();
+    	TestDaoWithDbPool db = new TestDaoWithDbPool();
     	
     	try {
     		db.insertData(2,  "name", "xxx@gmail.com");

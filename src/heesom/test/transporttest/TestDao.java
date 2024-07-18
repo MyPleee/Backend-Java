@@ -1,11 +1,11 @@
-package heesom.test.transport;
+package heesom.test.transporttest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import heesom.test.dbpool.DbManagerWithNoPool;
+import heesom.test.dbpooltest.DbManagerWithNoPool;
 
 public class TestDao {
 	String tableName = "test.users";

@@ -1,4 +1,4 @@
-package heesom.test.dbpool;
+package heesom.test.dbpooltest;
 
 import ple.util.StopWatch;
 

@@ -1,4 +1,4 @@
-package heesom.test.scheduler;
+package heesom.test.schedulertest;
 
 public class SchedulerTestMain {
 

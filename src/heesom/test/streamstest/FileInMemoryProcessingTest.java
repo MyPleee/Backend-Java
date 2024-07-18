@@ -1,4 +1,4 @@
-package heesom.test.streams;
+package heesom.test.streamstest;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
