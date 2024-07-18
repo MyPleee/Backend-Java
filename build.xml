@@ -8,12 +8,12 @@
 <!-- ======================================================================= -->
 <!-- TO SET : Set project name as you intended								 -->
 <!-- ======================================================================= -->
-<project name="test-heesom" default="copy" basedir="..">
+<project name="test-heesom" default="conf.copy" basedir=".">
 	
 	
     <!-- Product name and version properties -->
 	
-	<property file="${basedir}/build/mybuild.properties"/>
+	<property file="${basedir}/mybuild.properties"/>
 	
     <property name="product.name" value="test"/>
     <property name="product.version.major" value="0"/>
@@ -38,7 +38,7 @@
 		
 		<!-- ./lib에 있는 jar을 다 ./build/classes으로 복사???-->
 		<fileset dir="${build.lib.dir}">
-			<include name="**\*.jar"/>
+			<include name="**\\*.jar"/>
 		</fileset>
 		
 		<!-- 현재 디렉토리에 있는 클래스 파일이나 리소스 파일을 쉽게 참조할 수 있도록 함 해당 베이스 디렉토리 안에 있는 class파일을 다 참조할 수 있음-->
@@ -107,26 +107,20 @@
         <echo message="BUILD-DIR ... ${build.deploy.dir}"/>
         <echo message="COPY TO SERVER DEPLOY ... ${server.deploy.dir}"/>
 
-        <jar destfile="${build.deploy.dir}\${jar.name}">
+        <jar destfile="${build.deploy.dir}\\${jar.name}">
         	<!--타겟 지정하고-->
-            <fileset dir="${build.classes.dir}">
-        <!-- ======================================================= -->
-        <!-- TO SET : List class filenames to archive here           -->
-        <!-- ======================================================= -->
-				<!-- 여기서 어떤 특정 클래스만 집어넣을지 정하는 것 -->
-				<include name="${pkg.base.dir}\**\*.class"/>
-		   	</fileset>
+            <fileset dir="${build.classes.dir}"></fileset>
         </jar>
     	
-		<copy file="${build.deploy.dir}\${jar.name}"
-    	            todir="D:\ant_temp"
+		<copy file="${build.deploy.dir}\\${jar.name}"
+    	            todir="D:\\ant_temp"
 					overwrite="true" />
     	
-		<copy file="${build.deploy.dir}\${jar.name}"
+		<copy file="${build.deploy.dir}\\${jar.name}"
     	            todir="${server.deploy.dir}"
     				overwrite="true" />
     	
-		<copy file="${build.deploy.dir}\${jar.name}"
+		<copy file="${build.deploy.dir}\\${jar.name}"
     	            todir="${final.deploy.dir}"
     				overwrite="true" />
     	
@@ -138,7 +132,7 @@
     <!-- =================================================================== -->
     
    
-    <target name="copy" depends="deploy">
+    <target name="conf.copy" depends="deploy">
     	
     	<echo message="==============================================================="/>
 		<echo message="============ COPY web.xml ====================================="/>
@@ -153,15 +147,15 @@
         <echo message="HOME ... ${base.conf.dir}\system.properties                    "/>
         <echo message="COPY TO SERVER ... ${server.classes.dir}\system.properties     "/>
 
-    	<copy file="${base.webinf.dir}\web.xml"
+    	<copy file="${base.webinf.dir}\\web.xml"
     	            todir="${server.webinf.dir}"
     				overwrite="true" />
     	
-    	<copy file="${base.conf.dir}\dbpool.properties"
+    	<copy file="${base.conf.dir}\\dbpool.properties"
     	            todir="${server.classes.dir}"
     				overwrite="true"/>
 
-    	<copy file="${base.conf.dir}\system.properties"
+    	<copy file="${base.conf.dir}\\system.properties"
     	            todir="${server.classes.dir}"
     				overwrite="true" />
    
