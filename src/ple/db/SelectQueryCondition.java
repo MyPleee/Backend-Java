@@ -3,8 +3,8 @@ package ple.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class QueryCondition {
-    String startQuery;
+public class SelectQueryCondition {
+    String tableName;
     
     private ArrayList<HashMap<String, String>> whereConditions;
     private ArrayList<String> whereOperators;
@@ -22,10 +22,10 @@ public class QueryCondition {
     private ArrayList<String> likeOperators;
     private boolean hasLikeClause;
 
-    private QueryCondition() {}
+    private SelectQueryCondition() {}
 
-    public QueryCondition(String startQuery) {
-    	this.startQuery = startQuery;
+    public SelectQueryCondition(String tableName) {
+    	this.tableName = "SELECT * FROM " + tableName + " ";
     	
         this.whereConditions = new ArrayList<>();
         this.whereOperators = new ArrayList<>();
@@ -175,7 +175,7 @@ public class QueryCondition {
     }
     
     public String getQuery() {
-    	StringBuilder query = new StringBuilder(this.startQuery);
+    	StringBuilder query = new StringBuilder(this.tableName);
 
         if (hasWhereClause) {
             query.append("WHERE ");
@@ -197,7 +197,7 @@ public class QueryCondition {
         }
 
         if (hasOrderByClause) {
-            query.append("ORDER BY ");
+            query.append(" ORDER BY ");
             
             for (int i = 0; i < orderByConditions.size(); i++) {
                 for (String column : orderByConditions.get(i).keySet()) {
@@ -207,15 +207,17 @@ public class QueryCondition {
                     query.append(", ");
                 }
             }
-            query.append(";");
+            
         }
 
+        query.append(";");
+        
         return query.toString();
     }
 
     @Override
     public String toString() {
-    	StringBuilder query = new StringBuilder(this.startQuery);
+    	StringBuilder query = new StringBuilder(this.tableName);
 
         if (hasWhereClause) {
             query.append("\nWHERE ");
@@ -252,14 +254,17 @@ public class QueryCondition {
                     query.append(", ");
                 }
             }
-            query.append(";");
+            
         }
 
+        query.append(";");
+        
         return query.toString();
     }
 
+    /*
     public static void main(String[] args) {
-    	QueryCondition qc = new QueryCondition("SELECT * FROM TableName ");
+    	SelectQueryCondition qc = new SelectQueryCondition("TableName ");
         
         // WHERE 조건 추가
         //qc.addWhereCondition("", "name", "John Doe");
@@ -291,4 +296,5 @@ public class QueryCondition {
         System.out.println(qc.toString());
         System.out.println(qc.getQuery());
     }
+    */
 }

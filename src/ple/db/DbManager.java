@@ -21,6 +21,11 @@ public class DbManager{
 	
 	
 	// =================== db 조작 관련 메서드 ==================
+	/**
+	 * dbpool에서 받아온 커넥션을 한 개 얻는 메서드
+	 * 
+	 * @return Connection
+	 */
 	public Connection getConnection() {
 		return this.connection;
 	}
@@ -43,6 +48,9 @@ public class DbManager{
         }
     }
     
+    /**
+     * 커넥션을 다시 dbpool에 돌려주는 메서드
+     */
     public void release() {
     	DbPoolManager dbPoolManager = DbPoolManager.getInstance();
     	dbPoolManager.releaseConnection(this.connection);

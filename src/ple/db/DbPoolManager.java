@@ -92,7 +92,7 @@ public class DbPoolManager {
 		synchronized(this.connectionPool) {
 			while (this.connectionPool.isEmpty()) {
 				try {
-					wait();
+					this.connectionPool.wait();
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 					throw new SQLException("Interrupted while waiting for a connection", e);
@@ -121,7 +121,7 @@ public class DbPoolManager {
 					}
 				}
 				
-				notifyAll();
+				this.connectionPool.notifyAll();
 			}
 		}
 	}
