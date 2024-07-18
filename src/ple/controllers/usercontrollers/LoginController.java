@@ -6,10 +6,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import ple.config.SystemProperties;
 import ple.controllers.controllerinterfaces.CommonController;
+import ple.controllers.usercontrollers.dao.UserDAO;
 import ple.controllers.usercontrollers.dto.CheckUserValidDTO;
+import ple.controllers.usercontrollers.dto.UserDTO;
 import ple.controllers.usercontrollers.successhandling.UserSuccessResponseHandler;
 import ple.controllers.usercontrollers.util.PasswordHasher;
 import ple.controllers.usercontrollers.util.SessionManager;
+import ple.db.SelectQueryCondition;
 import ple.exceptions.customexceptions.PleException;
 import ple.exceptions.exceptiontypes.UserErrorType;
 
@@ -26,6 +29,9 @@ public class LoginController implements CommonController{
 
 		System.out.println("==> LoginController, doPost");
 		
+		String userId = req.getParameter("userid");
+        String userPassword = req.getParameter("userpassword");
+        
 		// 1. Admin인지 체크 후 세션에 저장
 		try {
 			SystemProperties systemProperties = SystemProperties.getInstance();
@@ -33,8 +39,7 @@ public class LoginController implements CommonController{
 			String adminId = systemProperties.getAdminId();
 			String adminPassword = systemProperties.getAdminPassword(); //이미 해싱 된 값
 			
-			String userId = req.getParameter("userid");
-	        String userPassword = req.getParameter("userpassword");
+
 
 	        PasswordHasher passwordHasher = new PasswordHasher();
 	        String hashedUserPassword = passwordHasher.hash(userPassword);
@@ -50,13 +55,13 @@ public class LoginController implements CommonController{
 	            //cookie.setSecure(true);
 	            resp.addCookie(cookie);
 	            
-	            CheckUserValidDTO loginDTO = new CheckUserValidDTO();
-	            loginDTO.setId(adminId);
-	            loginDTO.setIsAdmin(true);
-	            loginDTO.setIsValidUser(true);
+	            CheckUserValidDTO checkUserValidDto = new CheckUserValidDTO();
+	            checkUserValidDto.setId(userId);
+	            checkUserValidDto.setIsAdmin(true);
+	            checkUserValidDto.setIsValidUser(true);
 	            
 	            UserSuccessResponseHandler responseHandler = new UserSuccessResponseHandler();
-	            responseHandler.sendToClient(loginDTO, resp);
+	            responseHandler.sendToClient(checkUserValidDto, resp);
 	        
 	            return;
 	        } 
@@ -65,11 +70,27 @@ public class LoginController implements CommonController{
 			throw new PleException(UserErrorType.AdminLoginError);
 		}
 		
-		// 2. db 조회하여 존재하는 유저인지 체크
+		// 2. db 조회하여 존재하는 유저인지 체크하고 존재한다면 세션에 저장
+		try {
+			UserDAO userDao = new UserDAO();
+			SelectQueryCondition selectQuery = new SelectQueryCondition();
+			selectQuery.addWhereCondition("id", userId);
+			selectQuery.addWhereCondition("AND", "password", userPassword);
 		
-		// 3. 존재한다면 세션에 저장 
-		
-		// 3. dto 세팅후 핸들러 사용하여 반환
+			UserDTO userDto = userDao.selectUser(selectQuery);
+			if (userDto != null) {
+				CheckUserValidDTO checkUserValidDto = new CheckUserValidDTO();
+	            checkUserValidDto.setId(userId);
+	            checkUserValidDto.setIsAdmin(false);
+	            checkUserValidDto.setIsValidUser(true);
+			}
+			
+			// TODO: 세션에 저장하고 dto 반환 해야함
+		}  catch (Throwable t) {
+			t.printStackTrace();
+			throw new PleException(UserErrorType.AdminLoginError);
+		}
+
 		
 		System.out.println("<== LoginController, doPost");
 		
