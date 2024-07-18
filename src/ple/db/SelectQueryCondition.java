@@ -22,11 +22,7 @@ public class SelectQueryCondition {
     private ArrayList<String> likeOperators;
     private boolean hasLikeClause;
 
-    private SelectQueryCondition() {}
-
-    public SelectQueryCondition(String tableName) {
-    	this.tableName = "SELECT * FROM " + tableName + " ";
-    	
+    public SelectQueryCondition() {
         this.whereConditions = new ArrayList<>();
         this.whereOperators = new ArrayList<>();
         
@@ -38,6 +34,21 @@ public class SelectQueryCondition {
         
         this.likeConditions = new ArrayList<>();
         this.likeOperators = new ArrayList<>();
+    }
+    
+    public void setTableName(String tableName) {
+    	this.tableName = "SELECT * FROM " + tableName + " ";
+    }
+    
+    /**
+     * WHERE 절 컬럼과 값 추가
+     * 
+     * @param operator 논리 연산자 (AND/OR)
+     * @param column
+     * @param value
+     */
+    public void addWhereCondition(String column, String value) {
+    	this.addWhereCondition("", column, value);
     }
 
     /**

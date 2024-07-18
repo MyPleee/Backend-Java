@@ -7,14 +7,15 @@ import java.sql.SQLException;
 
 import ple.controllers.usercontrollers.dto.UserDTO;
 import ple.db.DbManager;
-import ple.db.DbPoolManager;
 import ple.db.SelectQueryCondition;
-import ple.exceptions.customexceptions.InitialException;
 
 public class UserDAO {
 	String tableName = "users";
 	
 	public UserDTO selectUser(SelectQueryCondition selectQuery){
+		
+		selectQuery.setTableName(this.tableName);
+		
 		DbManager dbManager = new DbManager();
 		Connection conn = dbManager.getConnection();
 		UserDTO userDto = new UserDTO();
