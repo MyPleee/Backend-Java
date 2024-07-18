@@ -1,5 +1,6 @@
 package ple.controllers.usercontrollers.util;
 
+import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,20 +10,18 @@ public class SessionManager {
 		
 		// 클라이언트가 세션 쿠키를 보내지 않았을 경우 null 반환, 세션 하이재킹 방지
         HttpSession session = req.getSession(false); 
-        
+
         if (session != null) {
             session.invalidate();
-            session = req.getSession(true); // 새로운 세션 생성
         }
-        
-        session.setMaxInactiveInterval(18000); // 5시간 (300분, 18000초)
-        
-        // https 옵션
-        // session.getServletContext().getSessionCookieConfig().setSecure(true);
-        session.getServletContext().getSessionCookieConfig().setHttpOnly(true);
-         
+        session = req.getSession(true); // 새로운 세션 생성
 
-        session.setAttribute("userId", userId);
+        if (session != null) {
+            session.setMaxInactiveInterval(18000);
+            session.setAttribute("userId", userId);
+        } else {
+            throw new IllegalStateException("Failed to create a new session.");
+        }
 
     }
 

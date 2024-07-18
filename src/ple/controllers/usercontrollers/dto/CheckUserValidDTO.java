@@ -1,11 +1,16 @@
 package ple.controllers.usercontrollers.dto;
 
-import ple.dto.CommonDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CheckUserValidDTO implements CommonDTO{
+public class CheckUserValidDTO{
 	
+	@JsonProperty("isAdmin")
 	private boolean isAdmin;
+	
+	@JsonProperty("isValidUser")
 	private boolean isValidUser;
+
+	@JsonProperty("id") 
 	private String id;
 	
 	public void setIsAdmin(boolean isAdmin) {
@@ -21,7 +26,15 @@ public class CheckUserValidDTO implements CommonDTO{
 	}
 	
 	@Override
-	public CommonDTO getOriginalDto() {
-		return this;
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("isAdmin - ").append(this.isAdmin)
+			.append("isValidUser - ").append(this.isValidUser)
+			.append("id - ").append(this.id);
+		
+		return sb.toString();
 	}
+
+	
 }

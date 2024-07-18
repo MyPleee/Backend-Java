@@ -28,13 +28,10 @@ public class UserFrontController extends HttpServlet{
 	
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String requestURI = req.getRequestURI();
+        System.out.println("===> UserFrontController");
+		String requestURI = req.getRequestURI();
         
         CommonController controller = controllerMap.get(requestURI);
-        
-        if (controller == null) {
-        	
-        }
         
         try {
         	controller.doGet(req, resp);
@@ -48,9 +45,7 @@ public class UserFrontController extends HttpServlet{
         	t.printStackTrace();
         }
         
-        
-
-        
+        System.out.println("<=== UserFrontController");
     }
 	
 	

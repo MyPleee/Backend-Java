@@ -1,15 +1,25 @@
 package ple.controllers.usercontrollers.dto;
 
-import ple.dto.CommonDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserDTO implements CommonDTO{
-	private String uuid;
-	private String id;
-	private String password;
-	private String name;
-	private String email;
+public class UserDTO {
 	
-	public void setuuid(String uuid) {
+	@JsonProperty("uuid")
+	private String uuid;
+	
+	@JsonProperty("id")
+	private String id;
+	
+	@JsonProperty("password")
+	private String password;
+	
+	@JsonProperty("name")
+	private String name;
+	
+	@JsonProperty("email")
+	private String email;
+
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 	
@@ -30,7 +40,15 @@ public class UserDTO implements CommonDTO{
 	}
 	
 	@Override
-	public CommonDTO getOriginalDto() {
-		return this;
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("uuid").append("-").append(this.uuid).append("\n")
+		.append("id").append("-").append(this.id).append("\n")
+		.append("password").append("-").append(this.password).append("\n")
+		.append("name").append("-").append(this.name).append("\n")
+		.append("email").append("-").append(this.email).append("\n");
+		
+		return sb.toString();
 	}
+	
 }
