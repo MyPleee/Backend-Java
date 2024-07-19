@@ -7,10 +7,12 @@ import java.sql.SQLException;
 
 import ple.controllers.usercontrollers.dto.UserDTO;
 import ple.db.DbManager;
+import ple.db.InsertQueryCondition;
 import ple.db.SelectQueryCondition;
+import ple.exceptions.customexceptions.PleException;
 
 public class UserDAO {
-	String tableName = "users";
+	String tableName = "TEST.USERS";
 	
 	public UserDTO selectUser(SelectQueryCondition selectQuery){
 		
@@ -40,6 +42,37 @@ public class UserDAO {
 		}
 		
 		return userDto;
+	}
+
+	public void insertUser(UserDTO userDto) throws PleException {
+		InsertQueryCondition insertQuery = new InsertQueryCondition();
+		
+		insertQuery.setTableName(this.tableName);
+		insertQuery.addInsertValue("uuid", userDto.getUuid());
+		insertQuery.addInsertValue("id", userDto.getId());
+		insertQuery.addInsertValue("password", userDto.getPassword());
+		insertQuery.addInsertValue("name", userDto.getName());
+		insertQuery.addInsertValue("email", userDto.getEmail());
+		
+		DbManager dbManager = new DbManager();
+		Connection conn = dbManager.getConnection();
+		
+		try (PreparedStatement ps = conn.prepareStatement(insertQuery.getQuery())) {
+			
+	        int rowsAffected = ps.executeUpdate();
+	        
+	        if (rowsAffected > 0) {
+	            System.out.println("User inserted successfully.");
+	        } else {
+	            System.out.println("User insertion failed.");
+	        }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbManager.release();
+		}
+		
 	}
 	
 	/*

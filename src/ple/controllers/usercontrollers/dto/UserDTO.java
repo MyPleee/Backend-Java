@@ -1,24 +1,21 @@
 package ple.controllers.usercontrollers.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import ple.exceptions.customexceptions.PleException;
+import ple.util.UUIDFactory;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UserDTO {
 	
-	@JsonProperty("uuid")
 	private String uuid;
-	
-	@JsonProperty("id")
 	private String id;
-	
-	@JsonProperty("password")
 	private String password;
-	
-	@JsonProperty("name")
 	private String name;
-	
-	@JsonProperty("email")
 	private String email;
 
+	// ========= setter =========
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
@@ -37,6 +34,28 @@ public class UserDTO {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	// ========= getter =========
+	public String getUuid() throws PleException {
+		this.uuid = UUIDFactory.getInstance().createNewUUID().toString();
+		return this.uuid;
+	}
+	
+	public String getId() {
+		return this.id;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getEmail() {
+		return this.email;
 	}
 	
 	@Override

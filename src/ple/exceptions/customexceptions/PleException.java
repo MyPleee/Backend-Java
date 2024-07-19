@@ -18,7 +18,6 @@ public class PleException extends Exception{
 		super(cause);
 	}
 	
-	@Deprecated
 	public PleException(PleErrorType errorType, String msg) {
 		super(msg);
 		this.errorType = errorType;

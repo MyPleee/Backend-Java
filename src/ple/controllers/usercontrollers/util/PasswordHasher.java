@@ -29,13 +29,13 @@ public class PasswordHasher {
 
             // 해싱된 바이트 배열을 16진수 문자열로 변환하여 표시
             hashed = this.bytesToHex(encodedHash);
-            
-            System.out.println(encryptMethod + " Hash: " + hashed);
 
         } catch (NoSuchAlgorithmException e) {
             System.err.println(encryptMethod + " algorithm not available.");
             e.printStackTrace();
         }
+        
+        System.out.println("input hashed success");
         
         return hashed;
     }
@@ -62,5 +62,16 @@ public class PasswordHasher {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+    
+    public static void main(String[] args) {
+    	PasswordHasher hasher = new PasswordHasher();
+    	try {
+			System.out.println(hasher.hash("test"));
+		} catch (UserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 }

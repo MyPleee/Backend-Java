@@ -13,13 +13,19 @@ public enum UserErrorType implements PleErrorType{
 			"AdminLoginError", 
 			3001, 
 			"admin 로그인 중 에러", 
-			HttpServletResponse.SC_UNAUTHORIZED
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
 			),
 	UserLoginError(
 			"UserLoginError", 
 			3002, 
 			"user 로그인 중 에러", 
-			HttpServletResponse.SC_UNAUTHORIZED
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
+			),
+	JSONParsingError(
+			"JSONParsingError", 
+			3003, 
+			"json을 dto로 변환 중 에러", 
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
 			),
 	;
 	
