@@ -1,16 +1,14 @@
 package ple.controllers.usercontrollers.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CheckUserValidDTO{
-	
-	@JsonProperty("isAdmin")
-	private boolean isAdmin;
-	
-	@JsonProperty("isValidUser")
-	private boolean isValidUser;
 
-	@JsonProperty("id") 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public class CheckUserValidDTO{
+
+	private boolean isAdmin;
+	private boolean isValidUser;
 	private String id;
 	
 	public void setIsAdmin(boolean isAdmin) {
