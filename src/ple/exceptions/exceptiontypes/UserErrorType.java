@@ -21,9 +21,15 @@ public enum UserErrorType implements PleErrorType{
 			"user 로그인 중 에러", 
 			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
 			),
+	UserSignUpError(
+			"UserSignUpError", 
+			3003, 
+			"user 계정 생성 중 에러", 
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
+			),
 	JSONParsingError(
 			"JSONParsingError", 
-			3003, 
+			3004, 
 			"json을 dto로 변환 중 에러", 
 			HttpServletResponse.SC_INTERNAL_SERVER_ERROR
 			),

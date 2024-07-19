@@ -1,7 +1,6 @@
 package ple.controllers.usercontrollers.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import ple.exceptions.customexceptions.PleException;
 import ple.util.UUIDFactory;
@@ -14,7 +13,12 @@ public class UserDTO {
 	private String password;
 	private String name;
 	private String email;
-
+	
+	
+	public UserDTO() throws PleException {
+		this.uuid = UUIDFactory.getInstance().createNewUUID().toString();
+	}
+	
 	// ========= setter =========
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
@@ -37,8 +41,7 @@ public class UserDTO {
 	}
 	
 	// ========= getter =========
-	public String getUuid() throws PleException {
-		this.uuid = UUIDFactory.getInstance().createNewUUID().toString();
+	public String getUuid(){
 		return this.uuid;
 	}
 	
