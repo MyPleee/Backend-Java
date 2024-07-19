@@ -12,8 +12,8 @@ public class QueryConditionTest {
 	}
 	
 	private static void selectQueryConditionTest() {
-    	SelectQueryCondition qc = new SelectQueryCondition("TableName ");
-        
+    	SelectQueryCondition qc = new SelectQueryCondition();
+        qc.setTableName("tableName");
         // WHERE 조건 추가
         qc.addWhereCondition("", "name", "John Doe");
         qc.addWhereCondition("OR", "age", "30" );
