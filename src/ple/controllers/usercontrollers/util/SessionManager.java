@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SessionManager {
-	
+	private SessionManager() {}
 	/**
 	 * 세션 생성 후 쿠키 추가
 	 * @param userId
 	 * @param req
 	 * @param resp
 	 */
-	public static void setValidUserSession(String userId, HttpServletRequest req, HttpServletResponse resp) {
+	public static void setValidUserSession(String userId, boolean isAmdin, HttpServletRequest req, HttpServletResponse resp) {
 		
 		// 클라이언트가 세션 쿠키를 보내지 않았을 경우 null 반환, 세션 하이재킹 방지
         HttpSession session = req.getSession(false); 
@@ -26,6 +26,7 @@ public class SessionManager {
         if (newSession != null) {
         	newSession.setMaxInactiveInterval(18000);
         	newSession.setAttribute("userId", userId);
+        	newSession.setAttribute("isAdmin", isAmdin);
         } else {
             throw new IllegalStateException("Failed to create a new session.");
         }
@@ -61,7 +62,7 @@ public class SessionManager {
     }
     
     /**
-     * 세션 유효성 체크
+     * 세션이 유효하다면 true, 유효하지 않다면 false
      * @param req
      * @param userId
      * @return
@@ -69,7 +70,22 @@ public class SessionManager {
     public static boolean isValidSession(String userId, HttpServletRequest req) {
         HttpSession session = req.getSession(false);
 
-        if (session != null && !session.getAttribute("userId").equals(userId)) {
+        if (session != null && session.getAttribute("userId").equals(userId)) {
+            return true;
+        }
+
+        return false;
+    }
+    
+    /**
+     * admin의 세션이라면 true user의 session이라면 false
+     * @param req
+     * @return
+     */
+    public static boolean isAdminSession(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+
+        if (session != null && session.getAttribute("isAdmin").equals("true")) {
             return true;
         }
 
