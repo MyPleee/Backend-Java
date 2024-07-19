@@ -14,7 +14,7 @@ import ple.exceptions.customexceptions.PleException;
 public class UserDAO {
 	String tableName = "TEST.USERS";
 	
-	public UserDTO selectUser(SelectQueryCondition selectQuery){
+	public UserDTO selectUser(SelectQueryCondition selectQuery) throws PleException{
 		
 		selectQuery.setTableName(this.tableName);
 		
