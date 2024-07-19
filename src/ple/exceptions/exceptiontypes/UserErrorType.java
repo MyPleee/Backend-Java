@@ -15,6 +15,12 @@ public enum UserErrorType implements PleErrorType{
 			"admin 로그인 중 에러", 
 			HttpServletResponse.SC_UNAUTHORIZED
 			),
+	UserLoginError(
+			"UserLoginError", 
+			3002, 
+			"user 로그인 중 에러", 
+			HttpServletResponse.SC_UNAUTHORIZED
+			),
 	;
 	
 	private String errorName;

@@ -45,15 +45,7 @@ public class LoginController implements CommonController{
 	        String hashedUserPassword = passwordHasher.hash(userPassword);
 	        
 	        if (adminId.equals(userId) && adminPassword.equals(hashedUserPassword)) {
-	            SessionManager.setValidUserSession(req, userId);
-
-	            // 클라이언트에게 응답으로 쿠키를 설정
-	            Cookie cookie = new Cookie("ple-session", req.getSession().getId());
-	            cookie.setPath("/");
-	            cookie.setMaxAge(18000); // 5시간 (초 단위)
-	            cookie.setHttpOnly(true);
-	            //cookie.setSecure(true);
-	            resp.addCookie(cookie);
+	            SessionManager.setValidUserSession(userId, req, resp);
 	            
 	            CheckUserValidDTO checkUserValidDto = new CheckUserValidDTO();
 	            checkUserValidDto.setId(userId);
@@ -78,14 +70,23 @@ public class LoginController implements CommonController{
 			selectQuery.addWhereCondition("AND", "password", userPassword);
 		
 			UserDTO userDto = userDao.selectUser(selectQuery);
+			
 			if (userDto != null) {
+				
+				SessionManager.setValidUserSession(userId, req, resp);
+				
 				CheckUserValidDTO checkUserValidDto = new CheckUserValidDTO();
 	            checkUserValidDto.setId(userId);
 	            checkUserValidDto.setIsAdmin(false);
 	            checkUserValidDto.setIsValidUser(true);
-			}
+	            
+	            UserSuccessResponseHandler responseHandler = new UserSuccessResponseHandler();
+	            responseHandler.sendToClient(checkUserValidDto, resp);
+	        
+	            return;
+			} 
 			
-			// TODO: 세션에 저장하고 dto 반환 해야함
+			System.out.println("user id - " + userId + "는 없는 유저입니다");
 		}  catch (Throwable t) {
 			t.printStackTrace();
 			throw new PleException(UserErrorType.AdminLoginError);
