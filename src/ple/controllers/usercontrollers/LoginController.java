@@ -1,11 +1,7 @@
 package ple.controllers.usercontrollers;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ple.config.SystemProperties;
 import ple.controllers.controllerinterfaces.CommonController;
@@ -13,6 +9,7 @@ import ple.controllers.usercontrollers.dao.UserDAO;
 import ple.controllers.usercontrollers.dto.CheckUserValidDTO;
 import ple.controllers.usercontrollers.dto.UserDTO;
 import ple.controllers.usercontrollers.successhandling.UserSuccessResponseHandler;
+import ple.controllers.usercontrollers.util.JSONParsing;
 import ple.controllers.usercontrollers.util.PasswordHasher;
 import ple.controllers.usercontrollers.util.SessionManager;
 import ple.db.SelectQueryCondition;
@@ -29,15 +26,9 @@ public class LoginController implements CommonController{
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws PleException{
 		System.out.println("==> LoginController, doPost");
-		
-	    ObjectMapper objectMapper = new ObjectMapper();
 	    
-	    UserDTO inputUserDto;
-	    try {
-	    	inputUserDto = objectMapper.readValue(req.getReader(), UserDTO.class);
-	    } catch (IOException e) {
-	        throw new PleException(e, UserErrorType.JSONParsingError);
-	    }
+		JSONParsing jsonParsing = new JSONParsing();
+		UserDTO inputUserDto = jsonParsing.getUserDtoFromJson(req);
 	    
 		String userId = inputUserDto.getId();
         String userPassword = inputUserDto.getPassword();
@@ -97,7 +88,7 @@ public class LoginController implements CommonController{
 			System.out.println("user id - " + userId + "는 없는 유저입니다");
 		}  catch (Throwable t) {
 			t.printStackTrace();
-			throw new PleException(t, UserErrorType.AdminLoginError);
+			throw new PleException(t, UserErrorType.UserLoginError);
 		}
 
 		System.out.println("<== LoginController, doPost");
