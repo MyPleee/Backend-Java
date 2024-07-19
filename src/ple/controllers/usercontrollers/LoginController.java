@@ -44,7 +44,7 @@ public class LoginController implements CommonController{
 	        String hashedUserPassword = passwordHasher.hash(userPassword);
 	        
 	        if (adminId.equals(userId) && adminPassword.equals(hashedUserPassword)) {
-	            SessionManager.setValidUserSession(userId, req, resp);
+	            SessionManager.setValidUserSession(userId, true, req, resp);
 	            
 	            CheckUserValidDTO checkUserValidDto = new CheckUserValidDTO();
 	            checkUserValidDto.setId(userId);
@@ -72,7 +72,7 @@ public class LoginController implements CommonController{
 			
 			if (userDto != null) {
 				
-				SessionManager.setValidUserSession(userId, req, resp);
+				SessionManager.setValidUserSession(userId, false, req, resp);
 				
 				CheckUserValidDTO checkUserValidDto = new CheckUserValidDTO();
 	            checkUserValidDto.setId(userId);
