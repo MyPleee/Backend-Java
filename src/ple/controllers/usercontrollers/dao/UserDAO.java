@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import ple.config.DbPoolProperties;
 import ple.controllers.usercontrollers.dto.UserDTO;
 import ple.db.DbManager;
 import ple.db.InsertQueryCondition;
@@ -12,11 +13,11 @@ import ple.db.SelectQueryCondition;
 import ple.exceptions.customexceptions.PleException;
 
 public class UserDAO {
-	String tableName = "TEST.USERS";
+	private static final String tableName = DbPoolProperties.getInstance().getDbSchema() + ".USERS";
 	
 	public UserDTO selectUser(SelectQueryCondition selectQuery) throws PleException{
 		
-		selectQuery.setTableName(this.tableName);
+		selectQuery.setTableName(UserDAO.tableName);
 		
 		DbManager dbManager = new DbManager();
 		Connection conn = dbManager.getConnection();
@@ -47,7 +48,7 @@ public class UserDAO {
 	public void insertUser(UserDTO userDto) throws PleException {
 		InsertQueryCondition insertQuery = new InsertQueryCondition();
 		
-		insertQuery.setTableName(this.tableName);
+		insertQuery.setTableName(UserDAO.tableName);
 		insertQuery.addInsertValue("uuid", userDto.getUuid());
 		insertQuery.addInsertValue("id", userDto.getId());
 		insertQuery.addInsertValue("password", userDto.getPassword());
@@ -85,7 +86,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		UserDAO dao = new UserDAO();
-		SelectQueryCondition qc = new SelectQueryCondition("TEST.USERS");
+		SelectQueryCondition qc = new SelectQueryCondition();
 		qc.addWhereCondition("", "name", "aaa");
 		
 		System.out.println(qc.getQuery());

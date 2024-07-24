@@ -11,6 +11,7 @@ public class DbPoolProperties {
 	
 	private String dbDriver;
 	private String dbUrl;
+	private String dbSchema;
 	private String dbUser;
 	private String dbPassword;
 	
@@ -37,6 +38,7 @@ public class DbPoolProperties {
             
             this.dbDriver = dbPropFile.getProperty("db.driver");
             this.dbUrl = dbPropFile.getProperty("db.url");
+            this.dbSchema = dbPropFile.getProperty("db.schema");
             this.dbUser = dbPropFile.getProperty("db.user");
             this.dbPassword = dbPropFile.getProperty("db.password");
             
@@ -53,6 +55,10 @@ public class DbPoolProperties {
     
     public String getDbUrl() {
     	return this.dbUrl;
+    }
+    
+    public String getDbSchema() {
+    	return this.dbSchema;
     }
     
     public String getDbUser() {
