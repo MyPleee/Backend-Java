@@ -12,11 +12,10 @@ public class DbManagerWithNoPool {
 	Connection connection;
 	
 	public DbManagerWithNoPool() {
-		DbPoolProperties dbPoolConfig = DbPoolProperties.getInstance();
 		
 		try {
-			Class.forName(dbPoolConfig.getDbDriver());
-			this.connection = DriverManager.getConnection(dbPoolConfig.getDbUrl(), dbPoolConfig.getDbUser(), dbPoolConfig.getDbPassword());
+			Class.forName(DbPoolProperties.getDbDriver());
+			this.connection = DriverManager.getConnection(DbPoolProperties.getDbUrl(), DbPoolProperties.getDbUser(), DbPoolProperties.getDbPassword());
 			this.connection.setAutoCommit(false);
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();

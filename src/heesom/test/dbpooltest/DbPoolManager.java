@@ -6,45 +6,64 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 import ple.config.DbPoolProperties;
+import ple.exceptions.customexceptions.FinalizeException;
+import ple.exceptions.customexceptions.InitialException;
+import ple.exceptions.exceptiontypes.InitialErrorType;
 
 public class DbPoolManager {
 	
 	private static DbPoolManager instance = new DbPoolManager();
 	private LinkedList<Connection> connectionPool = new LinkedList<>();
-	private DbPoolProperties dbPoolConfig;
-	
-	/**
-	 * db.properties load
-	 */
-	private DbPoolManager() {
-		dbPoolConfig = DbPoolProperties.getInstance();
 
-	}
 	
 	public static DbPoolManager getInstance() {
-		if (instance == null) {
-			DbPoolManager.instance = new DbPoolManager();
-		}
 		return DbPoolManager.instance;
 	}
 	
+	
+	// ===================== 서버와 관련된 메서드 =====================
 	/**
 	 * pool에 db.properties에 설정된 만큼의 커넥션 생성
+	 * @throws InitialException 
 	 */
-	public void initializePool() {
+	public void initializePool() throws InitialException {
 		try {
-			for (int i = 0; i < dbPoolConfig.getInitPoolSize(); i++) {
-				connectionPool.add(this.createNewConnectionForPool());
+			synchronized(this.connectionPool) {
+				for (int i = 0; i < DbPoolProperties.getInitPoolSize(); i++) {
+					this.connectionPool.add(this.createNewConnectionForPool());
+				}
 			}
-			System.out.println("dbpool 초기화 완료");
+			System.out.println("Making dbpool... Success");
 		} catch (ClassNotFoundException e) {
-			System.out.println("dbpool 생성 중 드라이버 가져올 수 없음 에러");
-			e.printStackTrace();
+			throw new InitialException(e, InitialErrorType.ClassNotFoundError);
 		} catch (SQLException e) {
-			System.out.println("dbpool 생성 중 sql 에러");
-			e.printStackTrace();
+			throw new InitialException(e, InitialErrorType.SqlError);
 		}
 	}
+	
+	/**
+	 * 서버 종료시 connection pool에 있는 connection 해제
+	 * @throws FinalizeException
+	 */
+	public void closePool() throws FinalizeException{
+        synchronized (this.connectionPool) {   
+            try {
+            	while (!this.connectionPool.isEmpty()) {
+                    Connection connection = connectionPool.removeFirst();
+                    if (connection != null && !connection.isClosed()) {
+                        connection.close();
+                    }
+            	}
+            	System.out.println("Closing dbpool... Success");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        
+        }
+    }
+	
+
+	// ===================== DbManager와 관련된 메서드 =====================
 	
 	/**
 	 * 커넥션 1개 생성 후 반환
@@ -53,8 +72,8 @@ public class DbPoolManager {
 	 * @throws SQLException
 	 */
 	private Connection createNewConnectionForPool() throws ClassNotFoundException, SQLException {
-		Class.forName(this.dbPoolConfig.getDbDriver());
-		return DriverManager.getConnection(this.dbPoolConfig.getDbUrl(), this.dbPoolConfig.getDbUser(), dbPoolConfig.getDbPassword());
+		Class.forName(DbPoolProperties.getDbDriver());
+		return DriverManager.getConnection(DbPoolProperties.getDbUrl(), DbPoolProperties.getDbUser(), DbPoolProperties.getDbPassword());
 	}
 	
 	/**
@@ -62,14 +81,15 @@ public class DbPoolManager {
 	 * @return Connection
 	 * @throws SQLException
 	 */
-	public synchronized Connection getConnection() throws SQLException {
-		
-		while (connectionPool.isEmpty()) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				throw new SQLException("Interrupted while waiting for a connection", e);
+	protected Connection getConnection() throws SQLException {
+		synchronized(this.connectionPool) {
+			while (this.connectionPool.isEmpty()) {
+				try {
+					this.connectionPool.wait();
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					throw new SQLException("Interrupted while waiting for a connection", e);
+				}
 			}
 		}
 		
@@ -80,20 +100,22 @@ public class DbPoolManager {
 	 * 커넥션 반환하면 dbpool에 추가 후 대기하고 있는 스레드 있다면 깨우기
 	 * @param connection
 	 */
-	public synchronized void releaseConnection(Connection connection) {
-		if (connection != null) {
-			// 현재 커넥션 풀 크기가 설정한 풀 크기 보다 작으면 커넥션 풀에 다시 추가
-			if (connectionPool.size() < this.dbPoolConfig.getMaxPoolSize()) {
-				connectionPool.addLast(connection);
-			} else {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+	protected void releaseConnection(Connection connection) {
+		synchronized(this.connectionPool) {
+			if (connection != null) {
+				// 현재 커넥션 풀 크기가 설정한 풀 크기 보다 작으면 커넥션 풀에 다시 추가
+				if (connectionPool.size() < DbPoolProperties.getMaxPoolSize()) {
+					connectionPool.addLast(connection);
+				} else {
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
+				
+				this.connectionPool.notifyAll();
 			}
-			
-			notifyAll();
 		}
 	}
 

@@ -1,10 +1,11 @@
 package heesom.test.dbpooltest;
 
+import ple.exceptions.customexceptions.InitialException;
 import ple.util.StopWatch;
 
 public class ConnectionTestMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InitialException {
 		DbPoolManager dbPoolManager = DbPoolManager.getInstance();
 		dbPoolManager.initializePool();
 		

@@ -13,7 +13,7 @@ import ple.db.SelectQueryCondition;
 import ple.exceptions.customexceptions.PleException;
 
 public class UserDAO {
-	private static final String tableName = DbPoolProperties.getInstance().getDbSchema() + ".USERS";
+	private static final String tableName = DbPoolProperties.getDbSchema() + ".USERS";
 	
 	public UserDTO selectUser(SelectQueryCondition selectQuery) throws PleException{
 		

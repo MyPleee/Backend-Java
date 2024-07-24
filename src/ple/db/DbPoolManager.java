@@ -14,14 +14,7 @@ public class DbPoolManager {
 	
 	private static DbPoolManager instance = new DbPoolManager();
 	private LinkedList<Connection> connectionPool = new LinkedList<>();
-	private DbPoolProperties dbPoolConfig;
-	
-	/**
-	 * db.properties load
-	 */
-	private DbPoolManager() {
-		dbPoolConfig = DbPoolProperties.getInstance();
-	}
+
 	
 	public static DbPoolManager getInstance() {
 		return DbPoolManager.instance;
@@ -36,7 +29,7 @@ public class DbPoolManager {
 	public void initializePool() throws InitialException {
 		try {
 			synchronized(this.connectionPool) {
-				for (int i = 0; i < dbPoolConfig.getInitPoolSize(); i++) {
+				for (int i = 0; i < DbPoolProperties.getInitPoolSize(); i++) {
 					this.connectionPool.add(this.createNewConnectionForPool());
 				}
 			}
@@ -79,8 +72,8 @@ public class DbPoolManager {
 	 * @throws SQLException
 	 */
 	private Connection createNewConnectionForPool() throws ClassNotFoundException, SQLException {
-		Class.forName(this.dbPoolConfig.getDbDriver());
-		return DriverManager.getConnection(this.dbPoolConfig.getDbUrl(), this.dbPoolConfig.getDbUser(), dbPoolConfig.getDbPassword());
+		Class.forName(DbPoolProperties.getDbDriver());
+		return DriverManager.getConnection(DbPoolProperties.getDbUrl(), DbPoolProperties.getDbUser(), DbPoolProperties.getDbPassword());
 	}
 	
 	/**
@@ -111,7 +104,7 @@ public class DbPoolManager {
 		synchronized(this.connectionPool) {
 			if (connection != null) {
 				// 현재 커넥션 풀 크기가 설정한 풀 크기 보다 작으면 커넥션 풀에 다시 추가
-				if (connectionPool.size() < this.dbPoolConfig.getMaxPoolSize()) {
+				if (connectionPool.size() < DbPoolProperties.getMaxPoolSize()) {
 					connectionPool.addLast(connection);
 				} else {
 					try {
