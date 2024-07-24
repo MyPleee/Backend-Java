@@ -35,10 +35,9 @@ public class LoginController implements CommonController{
         
 		// 1. Admin인지 체크 후 세션에 저장
 		try {
-			SystemProperties systemProperties = SystemProperties.getInstance();
 			
-			String adminId = systemProperties.getAdminId();
-			String adminPassword = systemProperties.getAdminPassword(); //이미 해싱 된 값
+			String adminId = SystemProperties.getAdminId();
+			String adminPassword = SystemProperties.getAdminPassword(); //이미 해싱 된 값
 
 	        PasswordHasher passwordHasher = new PasswordHasher();
 	        String hashedUserPassword = passwordHasher.hash(userPassword);

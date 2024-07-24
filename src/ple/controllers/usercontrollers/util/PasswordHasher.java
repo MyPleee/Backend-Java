@@ -11,8 +11,7 @@ public class PasswordHasher {
 	
 	public String hash(String input) throws UserException{
 		
-		SystemProperties systemProperties = SystemProperties.getInstance();
-    	String encryptMethod = systemProperties.getEncryptMethod();
+    	String encryptMethod = SystemProperties.getEncryptMethod();
 		
         String hashed = "";
         
